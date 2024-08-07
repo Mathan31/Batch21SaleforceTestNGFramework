@@ -33,4 +33,26 @@ public class MenuPage extends BaseClass{
 		driver.findElement(logoutLink).click();
 		return new LoginPage();
 	}
+	
+	public MenuPage clickOnAppLauncher() {
+		driver.findElement(applauncherIcon).click();
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return this;
+	}
+	
+	public MenuPage clickOnViewAll() {
+		driver.findElement(viewAllLink).click();;
+		return this;
+	}
+	
+	public SalesPage clickOnSales() { 
+		driver.findElement(salesLink).click();;
+		return new SalesPage(); 
+	}
+
 }

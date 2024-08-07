@@ -8,12 +8,16 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.DataProvider;
+import utilities.PropertyReader;
 
 public class BaseClass {
 	
 	public static WebDriver driver;
-	public String sBrowser = "Safari"; // Chrome,Edge,Firefox
-	public String sURL = "https://login.salesforce.com/";
+	public String propFileName = "Environment";
+	public String sBrowser =  PropertyReader.readDataFromPropertyFile(propFileName, "Browser");// Chrome,Edge,Firefox
+	public String sURL = PropertyReader.readDataFromPropertyFile(propFileName, "URL");
+	public String excelFileName = "";
 	
 	@BeforeClass
 	public void invokeBrowser() {
@@ -45,6 +49,12 @@ public class BaseClass {
 	@AfterClass
 	public void closeBrowser() {
 		driver.quit();
+	}
+
+	@DataProvider(name="TestCaseData")
+	public Object[][] excelData() {
+		Object[][] values = utilities.ExcelReader.getValueFromExcel(excelFileName);
+		return values;
 	}
 
 }
