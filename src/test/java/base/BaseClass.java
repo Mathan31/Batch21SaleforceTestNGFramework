@@ -13,7 +13,7 @@ import utilities.PropertyReader;
 
 public class BaseClass {
 	
-	public static WebDriver driver;
+	public WebDriver driver; // 123
 	public String propFileName = "Environment";
 	public String sBrowser =  PropertyReader.readDataFromPropertyFile(propFileName, "Browser");// Chrome,Edge,Firefox
 	public String sURL = PropertyReader.readDataFromPropertyFile(propFileName, "URL");

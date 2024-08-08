@@ -1,6 +1,7 @@
 package pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.interactions.Actions;
 
 public class SalesPage extends MenuPage{
@@ -16,7 +17,12 @@ public class SalesPage extends MenuPage{
 	private By statusTxt=By.xpath("//span[@title='Working - Contacted']");
 	private By savebtn=By.xpath("//button[@name='SaveEdit']");
 	private By noOfEmployee = By.xpath("//input[@name='NumberOfEmployees']");
+	private WebDriver driver;
 	
+	public SalesPage(WebDriver driver) {
+		super(driver);
+		this.driver = driver;
+	}
 	public SalesPage clickOnLeadsLink() {
 		Actions actions = new Actions(driver);
 		actions.moveToElement(driver.findElement(leadsLink)).click().perform();
