@@ -114,7 +114,6 @@ public void moveToElementAndClick(WebElement ele,String eleName) {
 	} catch (WebDriverException e) {
 		reportStep("Unknown exception occured while clicking in the field :", "FAIL");
 	} 
-	
 }
 
 public void moveToElement(WebElement ele,String eleName) {
@@ -129,7 +128,6 @@ public void moveToElement(WebElement ele,String eleName) {
 	} catch (WebDriverException e) {
 		reportStep("Unknown exception occured while clicking in the field :", "FAIL");
 	} 
-	
 }
 
 public void clickWithNoSnap(WebElement ele) {
@@ -437,6 +435,5 @@ public void selectDropDownUsingValue(WebElement ele, String value) {
 	}
 
 }
-	
 
 }

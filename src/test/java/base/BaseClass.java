@@ -1,23 +1,42 @@
 package base;
 
+import java.io.File;
 import java.time.Duration;
 
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.DataProvider;
+
+import libraries.HTMLReport;
 import utilities.PropertyReader;
 
-public class BaseClass {
+public class BaseClass extends HTMLReport{
 	
 	public WebDriver driver; // 123
 	public String propFileName = "Environment";
 	public String sBrowser =  PropertyReader.readDataFromPropertyFile(propFileName, "Browser");// Chrome,Edge,Firefox
 	public String sURL = PropertyReader.readDataFromPropertyFile(propFileName, "URL");
 	public String excelFileName = "";
+	public String testName,testDesc,moduleName;
+
+	@BeforeSuite
+	public void reportInit() {
+		startReport();
+	}
+	
+	@AfterSuite
+	public void bindReport() {
+		endReport();
+	}
 	
 	@BeforeClass
 	public void invokeBrowser() {
@@ -44,6 +63,8 @@ public class BaseClass {
 		driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(30));
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
 		driver.get(sURL);
+		startTestCase(testName, testDesc);
+		startTestcase(moduleName);
 	}
 	
 	@AfterClass
@@ -56,5 +77,19 @@ public class BaseClass {
 		Object[][] values = utilities.ExcelReader.getValueFromExcel(excelFileName);
 		return values;
 	}
-
+	
+	@Override
+	public String takeScreenshot() {
+		String sPath = System.getProperty("user.dir")+"/snap/img"+System.currentTimeMillis()+".png";
+		TakesScreenshot oShot = (TakesScreenshot)driver;
+		File osrc = oShot.getScreenshotAs(OutputType.FILE);
+		File dis = new File(sPath);
+		try {
+			FileUtils.copyFile(osrc, dis); 
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return sPath;
+	}
 }
